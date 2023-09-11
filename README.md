@@ -77,3 +77,6 @@ ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
 ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
 
 更多细节参阅 [LICENSE.txt](LICENSE.txt)
+
+## 使用
+默认账号密码：`admin`、`admin888`

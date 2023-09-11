@@ -7,4 +7,17 @@ return [
     // \think\middleware\LoadLangPack::class,
     // Session初始化
     // \think\middleware\SessionInit::class
+    [
+        \think\middleware\AllowCrossDomain::class, [
+            ['Access-Control-Allow-Headers' => 'Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With']
+        ]
+    ],
+    [
+        \app\middleware\Auth::class, [
+            ['whiteList' => [
+                '/login',
+                '/register',
+            ]],
+        ]
+    ],
 ];

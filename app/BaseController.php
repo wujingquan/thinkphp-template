@@ -6,6 +6,7 @@ namespace app;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
+use app\validate\Common;
 
 /**
  * 控制器基础类
@@ -35,6 +36,8 @@ abstract class BaseController
      * @var array
      */
     protected $middleware = [];
+
+    protected $model = null;
 
     /**
      * 构造方法
@@ -90,5 +93,48 @@ abstract class BaseController
 
         return $v->failException(true)->check($data);
     }
+
+    public function index() {
+        return $this->list();
+    }
+
+    public function create() {
+        
+    }
+
+    public function read($id) {
+        $item = $this->model::where('id', $id)->find();
+        return success_json($item);
+    }
+
+    public function edit($id) {
+
+    }
+
+    public function update($id) {
+        
+    }
+
+    public function delete($id) {
+        $this->model::destroy($id);
+        return success_json();
+    }
+
+    public function list()
+    {
+        $data = input('');
+        validate(Common::class)->check($data);
+        $page = input('?get.page') && intval(input('get.page')) >= 1 ? intval(input('get.page')) : 1;
+        $limit = input('?get.limit') && intval(input('get.limit')) > 0 ? intval(input('get.limit')) : 10;
+        $total = $this->model::count();
+        $items = $this->model::page($page, $limit)->select();
+        return json([
+            "page" => $page,
+            "limit" => $limit,
+            "total" => $total,
+            "items" => $items,
+        ]);
+    }
+
 
 }
